@@ -13,7 +13,7 @@ extern "C" {
  * Signature: (Ljava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1env_1init
-  (JNIEnv *, jobject, jstring);
+  (JNIEnv *, jobject);
 
 /*
  * Class:     com_sdk_jni_kestrel_KestrelStructHh
@@ -28,40 +28,24 @@ JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1env_1de
  * Method:    kestrel_license_add_from_file
  * Signature: (Ljava/lang/String;Ljava/lang/String;)I
  */
-JNIEXPORT jint JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1license_1add_1from_1file
-  (JNIEnv *, jobject, jstring, jstring);
+JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1license_1add_1from_1file
+  (JNIEnv *env, jobject);
 
 /*
  * Class:     com_sdk_jni_kestrel_KestrelStructHh
  * Method:    kestrel_plugin_load
  * Signature: (Ljava/lang/String;Ljava/lang/String;)I
  */
-JNIEXPORT jint JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1plugin_1load
-  (JNIEnv *, jobject, jstring, jstring);
-
-/*
- * Class:     com_sdk_jni_kestrel_KestrelStructHh
- * Method:    kestrel_plugin_unload
- * Signature: (Ljava/lang/String;)I
- */
-JNIEXPORT jint JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1plugin_1unload
-  (JNIEnv *, jobject, jstring);
+JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1plugin_1load
+  (JNIEnv *env, jobject);
 
 /*
  * Class:     com_sdk_jni_kestrel_KestrelStructHh
  * Method:    kestrel_annotator_open
  * Signature: (Ljava/lang/String;Ljava/lang/String;)I
  */
-JNIEXPORT jint JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1annotator_1open
-  (JNIEnv *, jobject, jstring, jstring);
-
-/*
- * Class:     com_sdk_jni_kestrel_KestrelStructHh
- * Method:    kestrel_annotator_close
- * Signature: (I)V
- */
-JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1annotator_1close
-  (JNIEnv *, jobject, jint);
+JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1annotator_1open
+  (JNIEnv *env, jobject);
 
 /*
  * Class:     com_sdk_jni_kestrel_KestrelStructHh
@@ -69,7 +53,7 @@ JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1annotat
  * Signature: (ILjava/lang/String;)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1annotator_1process
-  (JNIEnv *, jobject, jint, jstring);
+  (JNIEnv *env, jobject, jstring);
 
 #ifdef __cplusplus
 }

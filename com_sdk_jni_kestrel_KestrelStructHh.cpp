@@ -1,12 +1,19 @@
 ﻿#include <kestrel.hh>
 #include <kestrel_core.hh>
 #include <iostream>
+#include <string>
 #include "com_sdk_jni_kestrel_KestrelStructHh.h"
 using namespace Kestrel;
 
 #define PLUGIN_NAME "sensetivewords"
 
 extern "C" {
+
+static std::string UTF16StringToUTF8String(const char16_t* chars, size_t len) {
+    std::u16string u16_string(chars, len);
+    return std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t>{}
+            .to_bytes(u16_string);
+}
 
 std::string JavaStringToString(JNIEnv* env, jstring str) 
 {
@@ -25,19 +32,19 @@ std::string JavaStringToString(JNIEnv* env, jstring str)
 }
 
 //1. env init
-JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1env_1init(JNIEnv *env, jobject, jstring sdkNameString)
+JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1env_1init(JNIEnv *env, jobject)
 {
     Env::Init(PLUGIN_NAME);
 }
 
 // 2. load license
-JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1license_1add_1from_1file(JNIEnv *env, jobject, jstring licenseNameString, jstring suffix)
+JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1license_1add_1from_1file(JNIEnv *env, jobject)
 {
     License::AddFromFile("KESTREL.lic", "");
 }
 
 // 3. load kestrel plugin
-JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1plugin_1load(JNIEnv *env, jobject, jstring pluginNameString, jstring suffix)
+JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1plugin_1load(JNIEnv *env, jobject)
 {
     Kestrel::Log::SetLevel(KESTREL_LL_TRACE);
     Kestrel::Log(KESTREL_INFO, "正在加载...\n");
@@ -46,7 +53,7 @@ JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1plugin_
 }
 
 // 4. load kestrel Model
-JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1annotator_1open(JNIEnv *env, jobject, jstring pluginNameString, jstring modelJsonString)
+JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1annotator_1open(JNIEnv *env, jobject)
 {
     Kestrel::Annotator annotator(
             PLUGIN_NAME,
@@ -56,7 +63,7 @@ JNIEXPORT void JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1annotat
 }
 
 // 5. process kestrel Process
-JNIEXPORT jstring JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1annotator_1process(JNIEnv *env, jobject, jint openPointer, jstring inputJsonString)
+JNIEXPORT jstring JNICALL Java_com_sdk_jni_kestrel_KestrelStructHh_kestrel_1annotator_1process(JNIEnv *env, jobject, jstring inputJsonString)
 {
     Kestrel::Keson::Value input_data{ Kestrel::Keson::ARRAY };
     Kestrel::Log(KESTREL_INFO, "加载成功！\n");
